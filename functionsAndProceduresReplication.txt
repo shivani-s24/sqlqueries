@@ -1,0 +1,68 @@
+/*
+create function showName(fname varchar(50), lname varchar(50))
+returns varchar(100)
+deterministic
+begin
+Return concat(fname,lname);
+end$
+select showName("shivani","s") as 'name';
+
+
+create function myAge(dob date)
+returns int
+deterministic
+begin
+declare today_date date;
+select current_date() into today_date;
+Return year(today_date)- year(dob);
+end$
+select myAge('2001-04-24') as 'My Age';
+
+
+--stored procedure
+Delimeter $
+create procedure getCustomersAndOrdersInfo()
+Begin
+select * from Customers;
+select * from Orders;
+End$
+Delimeter ;
+
+call getCustomersAndOrdersInfo();
+
+---non parameterized stored procedure 
+Delimiter $
+create procedure getCustomerNamefromId(in customer int)
+Begin
+select first_name from Customers where Customers.customer_id=1;
+End$
+Delimiter;
+call getCustomerNamefromId(1);
+
+
+--with out parameter
+Delimiter $
+create procedure getCountFromId(out rec int)
+Begin
+select count(*) into rec from Customers where Customer.id=1;
+End$
+Delimiter ;
+
+--with both in and out
+DELIMITER $
+CREATE PROCEDURE GetCountBySubject (IN  Subject VARCHAR(25), OUT totalcount INT)
+BEGIN
+	SELECT COUNT(*) INTO totalcount FROM teacher WHERE coursetitle=subject ;
+END$
+DELIMITER ;
+CALL GetCountBySubject ('Java', @totalcount);
+SELECT @totalcount AS 'Total Count';
+*/
+
+
+--SELECT * FROM Customers;
+--CREATE VIEW CustView as SELECT customer_id, first_name, country from Customers;
+--SELECT * FROM CustView;
+--INSERT INTO CustView VALUES(6,'Shivani','INDIA');
+--SELECT * FROM CustView WHERE country ='USA';
+CREATE VIEW CustView as UPDATE CustView SET first_name='Ritika',country='INDIA' where customer_id=1;
